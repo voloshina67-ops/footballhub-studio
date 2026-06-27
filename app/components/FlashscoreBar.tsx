@@ -1,5 +1,5 @@
 "use client";
-
+import { getPlayerPosition } from "../lib/formations";
 import { useState } from "react";
 import { useMatchStore } from "../store/matchStore";
 import { useLineupStore } from "../store/lineupStore";
@@ -125,32 +125,13 @@ setMatch(
                     ? `https://static.flashscore.com/res/image/data/${player.images[player.images.length - 1].path}`
                     : "/player-placeholder.png";
 
-                const rowX: Record<number, number[]> = {
-                  4: [46, 34, 22, 8],
-                  5: [46, 38, 30, 20, 8],
-                  6: [46, 40, 33, 26, 18, 8],
-                };
-
-                const layout =
-                  rowX[formation.length] ??
-                  [46, 34, 22, 8];
-
-                const x =
-                  side === "home"
-                    ? layout[rowIndex]
-                    : 100 - layout[rowIndex];
-
-                const linePositions: Record<number, number[]> = {
-                  1: [50],
-                  2: [32, 68],
-                  3: [22, 50, 78],
-                  4: [16, 38, 62, 84],
-                  5: [12, 31, 50, 69, 88],
-                };
-
-                const y =
-                  linePositions[count]?.[playerIndex] ??
-                  (15 + playerIndex * (70 / (count - 1)));
+       const { x, y } = getPlayerPosition(
+  side,
+  formation.length,
+  rowIndex,
+  count,
+  playerIndex
+);         
 
                 fieldPlayers.push({
                   id: Date.now() + Math.random(),
