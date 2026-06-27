@@ -4,3 +4,16 @@ node_modules/
 .env.local
 backups/
 *.tar.gz
+
+# Backups
+archive/
+backups/
+*.bak
+*.bak2
+*.before-fallback
+*.full-import.bak
+*.logo.bak
+*.tar.gz
+
+# Runtime
+app.log
