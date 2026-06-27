@@ -1,0 +1,150 @@
+{
+  "name": "France",
+  "logo": "/cache/logos/france.png",
+  "players": [
+    {
+      "id": 1,
+      "name": "Josep Martínez",
+      "position": "Goalkeeper",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/388516-1686153132.jpg?lm=1"
+    },
+    {
+      "id": 2,
+      "name": "Yann Sommer",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/42205-1669897427.jpg?lm=1"
+    },
+    {
+      "id": 3,
+      "name": "Raffaele Di Gennaro",
+      "position": "Goalkeeper",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/70580-1692961707.jpg?lm=1"
+    },
+    {
+      "id": 4,
+      "name": "Alessandro Bastoni",
+      "position": "Centre-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/315853-1742497518.jpg?lm=1"
+    },
+    {
+      "id": 5,
+      "name": "Yann Bisseck",
+      "position": "Centre-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/441986-1742497863.jpg?lm=1"
+    },
+    {
+      "id": 6,
+      "name": "Manuel Akanji",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/284730-1684165752.jpg?lm=1"
+    },
+    {
+      "id": 7,
+      "name": "Stefan de Vrij",
+      "position": "Centre-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/111196-1663572651.jpg?lm=1"
+    },
+    {
+      "id": 8,
+      "name": "Francesco Acerbi",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/131075-1663572709.jpg?lm=1"
+    },
+    {
+      "id": 9,
+      "name": "Federico Dimarco",
+      "position": "Left-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/198116-1725531769.jpg?lm=1"
+    },
+    {
+      "id": 10,
+      "name": "Carlos Augusto",
+      "position": "Left-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/585982-1735891597.jpg?lm=1"
+    },
+    {
+      "id": 11,
+      "name": "Denzel Dumfries",
+      "position": "Right-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/321528-1746042223.jpg?lm=1"
+    },
+    {
+      "id": 12,
+      "name": "Matteo Darmian",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/54906-1695027410.jpg?lm=1"
+    },
+    {
+      "id": 13,
+      "name": "Hakan Çalhanoğlu",
+      "position": "Defensive Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/126414-1709035146.jpg?lm=1"
+    },
+    {
+      "id": 14,
+      "name": "Nicolò Barella",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/255942-1725531625.jpg?lm=1"
+    },
+    {
+      "id": 15,
+      "name": "Petar Sučić",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/668207-1757603291.jpg?lm=1"
+    },
+    {
+      "id": 16,
+      "name": "Davide Frattesi",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/394300-1730126974.jpg?lm=1"
+    },
+    {
+      "id": 17,
+      "name": "Andy Diouf",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/711976-1756099849.jpg?lm=1"
+    },
+    {
+      "id": 18,
+      "name": "Piotr Zielinski",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/181136-1692962961.jpg?lm=1"
+    },
+    {
+      "id": 19,
+      "name": "Henrikh Mkhitaryan",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/55735-1664973670.jpg?lm=1"
+    },
+    {
+      "id": 20,
+      "name": "Luis Henrique",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/691316-1743759325.jpg?lm=1"
+    },
+    {
+      "id": 21,
+      "name": "Lautaro Martínez",
+      "position": "Centre-Forward",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/406625-1695024988.jpg?lm=1"
+    },
+    {
+      "id": 22,
+      "name": "Marcus Thuram",
+      "position": "Centre-Forward",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/318528-1746041509.jpg?lm=1"
+    },
+    {
+      "id": 23,
+      "name": "Pio Esposito",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/930781-1757605256.jpg?lm=1"
+    },
+    {
+      "id": 24,
+      "name": "Ange-Yoan Bonny",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/827734-1751380953.jpg?lm=1"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useLineupStore } from "../store/lineupStore";
+
+type Player = {
+  id: number;
+  name: string;
+  position: string;
+  photo: string;
+};
+
+export default function TeamSidebar() {
+  const [team, setTeam] = useState("spain");
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  const addPlayer = useLineupStore(
+    (s: any) => s.addPlayer
+  );
+
+  useEffect(() => {
+    fetch(`/api/team/${team}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setPlayers(data.players || []);
+      });
+  }, [team]);
+
+  return (
+    <div className="w-[320px] rounded-2xl bg-[#0f1f35] p-4">
+
+      <input
+        value={team}
+        onChange={(e) => setTeam(e.target.value)}
+        className="mb-4 w-full rounded-lg bg-[#172b47] p-3 text-white"
+      />
+
+      <div className="mb-3 text-sm text-zinc-400">
+        Игроков: {players.length}
+      </div>
+
+      <div className="space-y-2">
+
+        {players.map((player) => (
+          <button
+            key={player.id}
+            onClick={() =>
+              addPlayer(player.name, player.photo, "home")
+            }
+            className="flex w-full items-center gap-3 rounded-lg bg-[#172b47] p-2 text-left hover:bg-[#27466f]"
+          >
+            <img
+              src={player.photo}
+              alt={player.name}
+              className="h-12 w-12 rounded-full bg-white object-cover"
+            />
+
+            <span className="text-white">
+              {player.name}
+            </span>
+          </button>
+        ))}
+
+      </div>
+
+    </div>
+  );
+}

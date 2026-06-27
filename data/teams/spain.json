@@ -1,0 +1,21 @@
+{
+  "name": "Spain",
+  "logo": "/logos/spain.png",
+  "players": [
+    {
+      "id": 1,
+      "name": "Rodri",
+      "photo": "/players/rodri.png"
+    },
+    {
+      "id": 2,
+      "name": "Pedri",
+      "photo": "/players/pedri.png"
+    },
+    {
+      "id": 3,
+      "name": "Laporte",
+      "photo": "/players/laporte.png"
+    }
+  ]
+}

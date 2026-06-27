@@ -1,0 +1,32 @@
+import { create } from "zustand";
+
+type Player = {
+  id: string;
+  name: string;
+  photo: string;
+};
+
+type FlashscoreState = {
+  homePlayers: Player[];
+  awayPlayers: Player[];
+
+  setPlayers: (
+    homePlayers: Player[],
+    awayPlayers: Player[]
+  ) => void;
+};
+
+export const useFlashscoreStore =
+  create<FlashscoreState>((set) => ({
+    homePlayers: [],
+    awayPlayers: [],
+
+    setPlayers: (
+      homePlayers,
+      awayPlayers
+    ) =>
+      set({
+        homePlayers,
+        awayPlayers,
+      }),
+  }));

@@ -1,0 +1,180 @@
+{
+  "name": "Real Madrid",
+  "logo": "/cache/logos/real-madrid.png",
+  "players": [
+    {
+      "id": 1,
+      "name": "Thibaut Courtois",
+      "position": "Goalkeeper",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/108390-1717280733.jpg?lm=1"
+    },
+    {
+      "id": 2,
+      "name": "Andriy Lunin",
+      "position": "Goalkeeper",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/404839-1701294131.jpg?lm=1"
+    },
+    {
+      "id": 3,
+      "name": "Fran González",
+      "position": "Goalkeeper",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/1055220-1704358404.jpg?lm=1"
+    },
+    {
+      "id": 4,
+      "name": "Dean Huijsen",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/890290-1750251451.jpg?lm=1"
+    },
+    {
+      "id": 5,
+      "name": "Éder Militão",
+      "position": "Centre-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/401530-1719653438.jpg?lm=1"
+    },
+    {
+      "id": 6,
+      "name": "Raúl Asencio",
+      "position": "Centre-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/935245-1731168094.jpg?lm=1"
+    },
+    {
+      "id": 7,
+      "name": "Antonio Rüdiger",
+      "position": "Centre-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/86202-1684484602.jpg?lm=1"
+    },
+    {
+      "id": 8,
+      "name": "David Alaba",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/59016-1684921582.jpeg?lm=1"
+    },
+    {
+      "id": 9,
+      "name": "Álvaro Carreras",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/811778-1737497415.jpg?lm=1"
+    },
+    {
+      "id": 10,
+      "name": "Fran García",
+      "position": "Left-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/341264-1688119965.jpg?lm=1"
+    },
+    {
+      "id": 11,
+      "name": "Ferland Mendy",
+      "position": "Left-Back",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/291417-1701294025.jpg?lm=1"
+    },
+    {
+      "id": 12,
+      "name": "Trent Alexander-Arnold",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/314353-1701680958.jpg?lm=1"
+    },
+    {
+      "id": 13,
+      "name": "Daniel Carvajal",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/138927-1721026790.jpg?lm=1"
+    },
+    {
+      "id": 14,
+      "name": "Aurélien Tchouaméni",
+      "position": "Defensive Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/413112-1668500754.jpg?lm=1"
+    },
+    {
+      "id": 15,
+      "name": "Federico Valverde",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/369081-1731018042.jpg?lm=1"
+    },
+    {
+      "id": 16,
+      "name": "Eduardo Camavinga",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/640428-1668500874.jpg?lm=1"
+    },
+    {
+      "id": 17,
+      "name": "Thiago Pitarch",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/1375227-1755633821.jpg?lm=1"
+    },
+    {
+      "id": 18,
+      "name": "Jorge Cestero",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/1186235-1759738619.jpg?lm=1"
+    },
+    {
+      "id": 19,
+      "name": "Dani Ceballos",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/319745-1723666162.jpg?lm=1"
+    },
+    {
+      "id": 20,
+      "name": "Manuel Ángel",
+      "position": "Central Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/646824-1696445512.jpg?lm=1"
+    },
+    {
+      "id": 21,
+      "name": "Jude Bellingham",
+      "position": "Attacking Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/581678-1748102891.jpg?lm=1"
+    },
+    {
+      "id": 22,
+      "name": "Arda Güler",
+      "position": "Attacking Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/861410-1699472585.jpg?lm=1"
+    },
+    {
+      "id": 23,
+      "name": "César Palacios",
+      "position": "Attacking Midfield",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/948272-1707907926.jpg?lm=1"
+    },
+    {
+      "id": 24,
+      "name": "Vinicius Junior",
+      "position": "Left Winger",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/371998-1761575144.jpg?lm=1"
+    },
+    {
+      "id": 25,
+      "name": "Rodrygo",
+      "position": "Right Winger",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/412363-1763041611.jpg?lm=1"
+    },
+    {
+      "id": 26,
+      "name": "Franco Mastantuono",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/1057316-1755702696.jpg?lm=1"
+    },
+    {
+      "id": 27,
+      "name": "Brahim Díaz",
+      "position": "Right Winger",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/314678-1744193327.jpg?lm=1"
+    },
+    {
+      "id": 28,
+      "name": "Kylian Mbappé",
+      "position": "Centre-Forward",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/342229-1682683695.jpg?lm=1"
+    },
+    {
+      "id": 29,
+      "name": "Gonzalo García",
+      "position": "",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/935230-1780664637.jpg?lm=1"
+    }
+  ]
+}

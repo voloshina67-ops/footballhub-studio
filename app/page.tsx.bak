@@ -1,0 +1,43 @@
+import FootballField from "./components/FootballField";
+import MatchHeader from "./components/MatchHeader";
+import FlashscoreBar from "./components/FlashscoreBar";
+import ExportButton from "./components/ExportButton";
+import HomePlayersSidebar from "./components/HomePlayersSidebar";
+import AwayPlayersSidebar from "./components/AwayPlayersSidebar";
+
+export default function Home() {
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,#0f2a5f_0%,#071321_30%,#020817_100%)] p-6">
+
+      <div className="pointer-events-none absolute left-[-300px] top-[-300px] h-[700px] w-[700px] rounded-full bg-blue-600/10 blur-[140px]"></div>
+
+      <div className="pointer-events-none absolute right-[-250px] top-[-250px] h-[600px] w-[600px] rounded-full bg-red-600/10 blur-[140px]"></div>
+
+      <div className="mx-auto max-w-[1900px]">
+
+        <MatchHeader />
+
+        <FlashscoreBar />
+
+        <div className="flex gap-3">
+
+          <HomePlayersSidebar />
+
+          <div className="flex-1">
+  <div id="export-area">
+    <FootballField />
+  </div>
+
+  <div className="mt-4 flex justify-center">
+    <ExportButton />
+  </div>
+</div>
+
+          
+
+        </div>
+
+      </div>
+    </main>
+  );
+}

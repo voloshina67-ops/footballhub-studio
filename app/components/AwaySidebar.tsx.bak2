@@ -1,0 +1,134 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useLineupStore } from "../store/lineupStore";
+import { useMatchStore } from "../store/matchStore";
+import { teams } from "../data/teams";
+
+export default function AwaySidebar() {
+  const [team, setTeam] = useState("france");
+  const [players, setPlayers] = useState<any[]>([]);
+  const [showPlayers, setShowPlayers] = useState(false);
+
+  const addPlayer = useLineupStore((s) => s.addPlayer);
+
+  const setPlayersOnField = useLineupStore(
+    (s: any) => s.setPlayers
+  );
+
+  const setAway =
+    useMatchStore((s) => s.setAway);
+
+  useEffect(() => {
+    fetch(`/api/team/${team}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setPlayers(data.players || []);
+
+        setAway(
+          data.name || team,
+          data.logo || ""
+        );
+      })
+      .catch(console.error);
+  }, [team, setAway]);
+
+  const auto433 = () => {
+    const lineup = players.slice(0, 11).map(
+      (p: any, i: number) => ({
+        id: Date.now() + i,
+        name: p.name,
+        photo: p.photo,
+        team: "away",
+        x: [50, 80, 60, 40, 20, 50, 65, 35, 80, 50, 20][i],
+        y: [12, 24, 22, 22, 24, 32, 40, 40, 46, 48, 46][i],
+      })
+    );
+
+    setPlayersOnField(lineup);
+  };
+
+  return (
+    <div>
+      <div className="mb-4 text-xl font-semibold uppercase tracking-[3px] text-white/95">
+        Select Team
+      </div>
+
+      <div className="w-[280px] rounded-2xl border border-white/10 bg-[#0f1f35] p-4">
+
+        <div className="relative mb-4">
+          <input
+            value={team}
+            onChange={(e) =>
+              setTeam(e.target.value)
+            }
+            className="w-full rounded-xl border border-white/10 bg-[#08152a] px-4 py-3 text-white"
+          />
+
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500">
+            🔍
+          </div>
+        </div>
+
+        <div className="mb-4 space-y-1">
+          {teams.map((t) => (
+            <div
+              key={t.slug}
+              onClick={() => {
+                setTeam(t.slug);
+                setShowPlayers(true);
+              }}
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/5 bg-[#101f34] p-2 hover:bg-[#162a45]"
+            >
+              <img
+                src={t.logo}
+                className="h-8 w-8 object-contain"
+              />
+
+              <div className="text-sm text-white">
+                {t.name}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={auto433}
+          className="mb-4 w-full rounded-lg bg-red-600 p-3 font-bold text-white"
+        >
+          ⚽ Auto 4-3-3
+        </button>
+
+        {showPlayers && (
+          <div className="max-h-[720px] space-y-1 overflow-y-auto pr-1">
+
+            {players.map((player) => (
+              <div
+                key={player.id}
+                onClick={() =>
+                  addPlayer(
+                    player.name,
+                    player.photo,
+                    "away"
+                  )
+                }
+                className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/5 bg-[#101f34] p-2 hover:bg-[#162a45]"
+              >
+                <img
+                  src={player.photo}
+                  className="h-10 w-10 rounded-full"
+                />
+
+                <div className="text-white">
+                  {player.name}
+                </div>
+              </div>
+            ))}
+
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}

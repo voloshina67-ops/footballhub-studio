@@ -1,0 +1,24 @@
+{
+  "name": "Barcelona",
+  "logo": "/cache/logos/barcelona.png",
+  "players": [
+    {
+      "id": 1,
+      "name": "Daniel Barcelona",
+      "position": "Defender",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/default.jpg?lm=1"
+    },
+    {
+      "id": 2,
+      "name": "Dominik Rang",
+      "position": "Midfielder",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/default.jpg?lm=1"
+    },
+    {
+      "id": 3,
+      "name": "Sebastian Jonen",
+      "position": "Striker",
+      "photo": "https://img.a.transfermarkt.technology/portrait/medium/default.jpg?lm=1"
+    }
+  ]
+}
