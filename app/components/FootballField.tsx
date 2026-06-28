@@ -71,12 +71,12 @@ export default function FootballField() {
       ref={fieldRef}
       className="relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.45)]"
     >
-      <img
-        src="/assets/field.png"
-        alt="field"
-        className="h-[820px] w-full select-none object-cover"
-        draggable={false}
-      />
+     <div
+  className="absolute inset-0 bg-cover bg-center"
+  style={{
+    backgroundImage: "url('/assets/field.png')",
+  }}
+/>
 
 <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40"></div>
 <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.55)]"></div>
