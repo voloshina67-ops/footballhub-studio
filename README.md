@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FootballHub Studio MVP
 
-## Getting Started
+FootballHub Studio is a broadcast-style football lineup builder for creating match graphics from imported team data, arranging players on a pitch, and exporting a production-ready PNG.
 
-First, run the development server:
+## Current MVP Features
+
+- Flashscore lineup import by match URL.
+- Broadcast match header with team names, logos, and score display.
+- 16:9 export frame containing the match header, pitch, and player cards.
+- Draggable player cards with photo, name, number, and fallbacks.
+- Home and away formation controls for common formations.
+- Local project save/load as JSON.
+- PNG export at 1920x1080.
+- Dark glass broadcast UI for demo presentation.
+
+## Tech Stack
+
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS
+- Zustand
+- html-to-image
+
+## Run Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in a browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For a production validation build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+## Current Stable Commit
 
-To learn more about Next.js, take a look at the following resources:
+`b63d40d` — `Polish MVP demo presentation`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Known Limitations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Flashscore import depends on the current external response shape.
+- Save/load is local JSON only; there is no backend project library.
+- Formation changes reposition existing players but do not infer roles.
+- Export is optimized for the current 16:9 MVP frame.
+- Sidebar roster data is populated from imports, not from manual edits.
 
-## Deploy on Vercel
+## Next Priorities
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Harden Flashscore parsing and error states.
+- Add project metadata and named saves.
+- Improve manual player/team editing.
+- Add export presets and visual QA across common viewports.
