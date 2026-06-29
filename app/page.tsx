@@ -1,5 +1,6 @@
 import FlashscoreBar from "./components/FlashscoreBar";
 import EditorContent from "./components/EditorContent";
+import ProjectControls from "./components/ProjectControls";
 
 export default function Home() {
   return (
@@ -12,6 +13,8 @@ export default function Home() {
       <div className="mx-auto max-w-[1900px]">
 
         <FlashscoreBar />
+
+        <ProjectControls />
 
         <EditorContent />
 

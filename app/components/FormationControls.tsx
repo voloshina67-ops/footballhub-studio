@@ -11,6 +11,7 @@ import {
   type FieldPlayer,
   useLineupStore,
 } from "../store/lineupStore";
+import { useFormationStore } from "../store/formationStore";
 
 const FORMATION_OPTIONS = Object.keys(
   COMMON_FORMATIONS
@@ -106,6 +107,14 @@ function applyFormation(
 function FormationSelect({ label, side }: FormationSelectProps) {
   const players = useLineupStore((state) => state.players);
   const setPlayers = useLineupStore((state) => state.setPlayers);
+  const selectedFormation = useFormationStore((state) =>
+    side === "home"
+      ? state.homeFormation
+      : state.awayFormation
+  );
+  const setFormation = useFormationStore(
+    (state) => state.setFormation
+  );
   const teamPlayerCount = players.filter(
     (player) => player.team === side
   ).length;
@@ -113,12 +122,13 @@ function FormationSelect({ label, side }: FormationSelectProps) {
   const handleChange = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
+    const formation = event.currentTarget.value;
+
+    if (!(formation in COMMON_FORMATIONS)) return;
+
+    setFormation(side, formation as FormationName);
     setPlayers(
-      applyFormation(
-        players,
-        side,
-        event.currentTarget.value
-      )
+      applyFormation(players, side, formation)
     );
   };
 
@@ -130,7 +140,7 @@ function FormationSelect({ label, side }: FormationSelectProps) {
       <select
         onChange={handleChange}
         disabled={!teamPlayerCount}
-        defaultValue="4-3-3"
+        value={selectedFormation}
         className="min-w-0 flex-1 rounded-lg border border-white/10 bg-slate-950/80 px-3 py-2 text-sm font-extrabold text-white outline-none transition focus:border-emerald-200/50 disabled:cursor-not-allowed disabled:text-white/35"
       >
         {FORMATION_OPTIONS.map((formation) => (
