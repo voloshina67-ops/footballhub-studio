@@ -19,6 +19,12 @@ import {
   type FlashscorePlayer,
   useFlashscoreStore,
 } from "../store/flashscoreStore";
+import {
+  DEFAULT_THEME,
+  isThemeName,
+  type ThemeName,
+} from "../lib/themes";
+import { useThemeStore } from "../store/themeStore";
 
 type SavedProject = {
   version: 1;
@@ -33,6 +39,7 @@ type SavedProject = {
     away: FormationName;
   };
   players: FieldPlayer[];
+  theme: ThemeName;
   bench: {
     home: FlashscorePlayer[];
     away: FlashscorePlayer[];
@@ -185,6 +192,7 @@ function parseProject(
   const formations = value.formations;
   const players = value.players;
   const bench = value.bench;
+  const theme = value.theme;
 
   if (
     !isObject(match) ||
@@ -236,6 +244,7 @@ function parseProject(
         : "4-3-3",
     },
     players: parsedPlayers as FieldPlayer[],
+    theme: isThemeName(theme) ? theme : DEFAULT_THEME,
     bench: {
       home: parsedHomeBench,
       away: parsedAwayBench,
@@ -283,6 +292,8 @@ export default function ProjectControls() {
     (state) => state.setPlayers
   );
   const setSubs = useFlashscoreStore((state) => state.setSubs);
+  const theme = useThemeStore((state) => state.theme);
+  const setTheme = useThemeStore((state) => state.setTheme);
   const canSave = players.length > 0;
 
   const handleSave = () => {
@@ -304,6 +315,7 @@ export default function ProjectControls() {
         away: awayFormation,
       },
       players,
+      theme,
       bench: {
         home: homeSubs,
         away: awaySubs,
@@ -344,6 +356,7 @@ export default function ProjectControls() {
         project.formations.home,
         project.formations.away
       );
+      setTheme(project.theme);
       setPlayers(project.players);
       setFlashPlayers(
         project.players

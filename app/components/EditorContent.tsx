@@ -7,11 +7,16 @@ import FootballField from "./FootballField";
 import ExportButton from "./ExportButton";
 import MatchHeader from "./MatchHeader";
 import FormationControls from "./FormationControls";
+import ThemeControls from "./ThemeControls";
 import PlayerRoleControls from "./PlayerRoleControls";
 import BenchPanel from "./BenchPanel";
+import { getThemePreset } from "../lib/themes";
+import { useThemeStore } from "../store/themeStore";
 
 export default function EditorContent() {
   const players = useLineupStore((s) => s.players);
+  const themeName = useThemeStore((s) => s.theme);
+  const theme = getThemePreset(themeName);
 
   if (!players.length) {
     return (
@@ -31,12 +36,13 @@ export default function EditorContent() {
       <HomePlayersSidebar />
 
       <div className="min-w-0 flex-1">
+        <ThemeControls />
         <FormationControls />
         <PlayerRoleControls />
 
         <div
           id="export-area"
-          className="mx-auto aspect-video w-full max-w-[1600px] overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] bg-transparent p-[clamp(0.5rem,1vw,0.9rem)]"
+          className={`mx-auto aspect-video w-full max-w-[1600px] overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] bg-transparent p-[clamp(0.5rem,1vw,0.9rem)] ${theme.exportFrame}`}
         >
           <div className="flex h-full min-h-0 flex-col">
             <MatchHeader />

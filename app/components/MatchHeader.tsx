@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useMatchStore } from "../store/matchStore";
+import { getThemePreset } from "../lib/themes";
+import { useThemeStore } from "../store/themeStore";
 
 type TeamIdentityProps = {
   name: string;
@@ -68,6 +70,8 @@ export default function MatchHeader() {
   const awayTeam = useMatchStore((s) => s.awayTeam);
   const homeLogo = useMatchStore((s) => s.homeLogo);
   const awayLogo = useMatchStore((s) => s.awayLogo);
+  const themeName = useThemeStore((s) => s.theme);
+  const theme = getThemePreset(themeName);
 
   const homeName = homeTeam.trim() || "Home";
   const awayName = awayTeam.trim() || "Away";
@@ -75,17 +79,17 @@ export default function MatchHeader() {
   return (
     <header
       aria-label={`${homeName} versus ${awayName}`}
-      className="relative isolate mb-[clamp(0.6rem,1.2vw,1rem)] overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] border border-white/15 bg-[#07120f]/95 shadow-[0_18px_60px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.16)]"
+      className={`relative isolate mb-[clamp(0.6rem,1.2vw,1rem)] overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] border ${theme.header}`}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_30%,rgba(59,130,246,0.24),transparent_32%),radial-gradient(circle_at_90%_30%,rgba(244,63,94,0.22),transparent_32%),linear-gradient(115deg,rgba(255,255,255,0.08),transparent_35%,rgba(16,185,129,0.08)_65%,transparent)]" />
-      <div className="pointer-events-none absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-emerald-100/70 to-transparent shadow-[0_0_18px_rgba(167,243,208,0.5)]" />
+      <div className={`pointer-events-none absolute inset-0 ${theme.headerOverlay}`} />
+      <div className={`pointer-events-none absolute inset-x-[8%] top-0 h-px bg-gradient-to-r ${theme.topLine}`} />
 
       <div className="relative grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[clamp(0.5rem,2vw,2.5rem)] px-[clamp(0.75rem,2.5vw,3rem)] py-[clamp(0.65rem,1.5vw,1.5rem)]">
         <TeamIdentity name={homeName} logo={homeLogo} side="home" />
 
         <div className="flex flex-col items-center">
-          <div className="mb-[clamp(0.2rem,0.45vw,0.45rem)] flex items-center gap-1.5 rounded-full border border-emerald-200/15 bg-emerald-300/10 px-[clamp(0.4rem,0.8vw,0.75rem)] py-1 text-[clamp(0.4rem,0.52vw,0.7rem)] font-extrabold uppercase tracking-[0.16em] text-emerald-100/85 backdrop-blur-xl">
-            <span className="size-[clamp(0.25rem,0.35vw,0.4rem)] rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(110,231,183,0.9)]" />
+          <div className={`mb-[clamp(0.2rem,0.45vw,0.45rem)] flex items-center gap-1.5 rounded-full border px-[clamp(0.4rem,0.8vw,0.75rem)] py-1 text-[clamp(0.4rem,0.52vw,0.7rem)] font-extrabold uppercase tracking-[0.16em] backdrop-blur-xl ${theme.status}`}>
+            <span className={`size-[clamp(0.25rem,0.35vw,0.4rem)] rounded-full ${theme.statusDot}`} />
             Pre-match
           </div>
 

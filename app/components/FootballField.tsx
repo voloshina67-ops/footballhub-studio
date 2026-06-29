@@ -12,6 +12,8 @@ import {
 } from "../store/lineupStore";
 import { useFlashscoreStore } from "../store/flashscoreStore";
 import { useBenchSelectionStore } from "../store/benchSelectionStore";
+import { getThemePreset } from "../lib/themes";
+import { useThemeStore } from "../store/themeStore";
 
 type DragState = {
   id: number;
@@ -56,7 +58,13 @@ function hasGoalkeeperBadge(player: FieldPlayer) {
   );
 }
 
-function FieldPlayerCard({ player }: { player: FieldPlayer }) {
+function FieldPlayerCard({
+  player,
+  theme,
+}: {
+  player: FieldPlayer;
+  theme: ReturnType<typeof getThemePreset>;
+}) {
   const [photoFailed, setPhotoFailed] = useState(false);
   const name = String(player.name ?? "").trim() || "Unknown Player";
   const number = String(player.number ?? "").trim() || "-";
@@ -69,20 +77,8 @@ function FieldPlayerCard({ player }: { player: FieldPlayer }) {
   const hasCaptain = hasCaptainBadge(player);
   const hasGoalkeeper = hasGoalkeeperBadge(player);
   const accentClasses = isHome
-    ? {
-        halo: "bg-blue-300/35",
-        ring: "border-blue-200/90 shadow-blue-400/35",
-        number:
-          "border-blue-100/55 bg-blue-500/95 text-white shadow-blue-950/25",
-        line: "from-blue-300/0 via-blue-200/75 to-blue-300/0",
-      }
-    : {
-        halo: "bg-rose-300/35",
-        ring: "border-rose-200/90 shadow-rose-400/35",
-        number:
-          "border-rose-100/55 bg-rose-500/95 text-white shadow-rose-950/25",
-        line: "from-rose-300/0 via-rose-200/75 to-rose-300/0",
-      };
+    ? theme.home
+    : theme.away;
 
   return (
     <div className="relative flex w-[clamp(5.5rem,12vw,8.5rem)] flex-col items-center rounded-[clamp(0.65rem,1vw,0.85rem)] border border-white/20 bg-slate-950/64 px-[clamp(0.35rem,0.8vw,0.6rem)] pb-[clamp(0.28rem,0.7vw,0.52rem)] pt-[clamp(0.34rem,0.8vw,0.6rem)] shadow-[0_14px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl">
@@ -148,6 +144,8 @@ export default function FootballField() {
   const setSubs = useFlashscoreStore((s) => s.setSubs);
   const selectedBench = useBenchSelectionStore((s) => s.selectedBench);
   const clearBench = useBenchSelectionStore((s) => s.clearBench);
+  const themeName = useThemeStore((s) => s.theme);
+  const theme = getThemePreset(themeName);
 
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<DragState | null>(null);
@@ -279,7 +277,7 @@ export default function FootballField() {
     <div
       id="lineup-canvas"
       ref={fieldRef}
-      className="relative isolate overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] border border-white/15 bg-[#06110d] shadow-[0_28px_90px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.16)] select-none"
+      className={`relative isolate overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] border select-none ${theme.field}`}
     >
       <Image
         src="/assets/field.png"
@@ -289,13 +287,13 @@ export default function FootballField() {
         preload
         sizes="(max-width: 1024px) 100vw, 70vw"
         draggable={false}
-        className="block h-auto w-full object-cover object-center saturate-[0.82] contrast-[1.08] brightness-[0.78]"
+        className={`block h-auto w-full object-cover object-center ${theme.fieldImage}`}
       />
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-15%,rgba(190,255,225,0.24),transparent_48%),linear-gradient(180deg,rgba(3,12,9,0.18)_0%,transparent_42%,rgba(0,5,3,0.5)_100%)]" />
+      <div className={`pointer-events-none absolute inset-0 ${theme.fieldOverlay}`} />
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(255,255,255,0.08)_0,rgba(255,255,255,0.08)_1px,transparent_1px,transparent_4px)] opacity-25 mix-blend-overlay" />
       <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_clamp(45px,10vw,140px)_rgba(0,0,0,0.72),inset_0_1px_0_rgba(255,255,255,0.14)]" />
-      <div className="pointer-events-none absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-emerald-100/70 to-transparent shadow-[0_0_18px_rgba(167,243,208,0.6)]" />
+      <div className={`pointer-events-none absolute inset-x-[8%] top-0 h-px bg-gradient-to-r ${theme.fieldLine}`} />
 
       {players.map((player) => (
         <div
@@ -333,7 +331,7 @@ export default function FootballField() {
           }}
           className="group cursor-grab [will-change:transform] outline-none transition-[scale,filter] duration-200 ease-out hover:scale-105 hover:brightness-110 active:cursor-grabbing active:scale-105"
         >
-          <FieldPlayerCard player={player} />
+          <FieldPlayerCard player={player} theme={theme} />
         </div>
       ))}
     </div>
