@@ -53,7 +53,7 @@ export default function ExportButton() {
       type="button"
       onClick={exportImage}
       disabled={isExporting}
-      className="rounded-xl bg-blue-600 px-6 py-3 font-bold text-white transition hover:bg-blue-500 disabled:cursor-wait disabled:bg-blue-900 disabled:text-white/60"
+      className="rounded-xl border border-emerald-100/15 bg-emerald-600 px-6 py-3 text-sm font-black text-white shadow-[0_12px_24px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.18)] transition hover:bg-emerald-500 disabled:cursor-wait disabled:bg-slate-800 disabled:text-white/45"
     >
       {isExporting ? "EXPORTING..." : "EXPORT PNG"}
     </button>

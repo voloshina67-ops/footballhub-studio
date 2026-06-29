@@ -265,7 +265,7 @@ export default function ProjectControls() {
   };
 
   return (
-    <div className="mb-4 flex flex-col gap-3 rounded-[1rem] border border-white/10 bg-slate-950/55 p-3 shadow-[0_14px_34px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 rounded-[1rem] border border-white/10 bg-slate-950/55 p-3 shadow-[0_14px_34px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
       <div>
         <div className="text-[0.68rem] font-black uppercase tracking-[0.18em] text-emerald-100/70">
           Project
@@ -282,7 +282,7 @@ export default function ProjectControls() {
           type="button"
           onClick={handleSave}
           disabled={!canSave}
-          className="rounded-xl border border-white/10 bg-blue-600 px-4 py-2 text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-white/35"
+          className="rounded-xl border border-blue-100/15 bg-blue-600 px-4 py-2 text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-white/35"
         >
           SAVE PROJECT
         </button>
