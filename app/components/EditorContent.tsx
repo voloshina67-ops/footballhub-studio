@@ -21,10 +21,18 @@ export default function EditorContent() {
 
         <HomePlayersSidebar />
 
-        <div className="flex-1">
-          <div id="export-area">
-            <MatchHeader />
-            <FootballField />
+        <div className="min-w-0 flex-1">
+          <div
+            id="export-area"
+            className="mx-auto aspect-video w-full max-w-[1600px] overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] bg-transparent p-[clamp(0.5rem,1vw,0.9rem)]"
+          >
+            <div className="flex h-full min-h-0 flex-col">
+              <MatchHeader />
+
+              <div className="min-h-0 flex-1 [&_#lineup-canvas]:h-full [&_#lineup-canvas>img]:h-full">
+                <FootballField />
+              </div>
+            </div>
           </div>
 
           <div className="mt-4 flex justify-center">
