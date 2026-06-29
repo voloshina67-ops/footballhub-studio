@@ -7,6 +7,7 @@ import FootballField from "./FootballField";
 import ExportButton from "./ExportButton";
 import MatchHeader from "./MatchHeader";
 import FormationControls from "./FormationControls";
+import PlayerRoleControls from "./PlayerRoleControls";
 import BenchPanel from "./BenchPanel";
 
 export default function EditorContent() {
@@ -31,6 +32,7 @@ export default function EditorContent() {
 
       <div className="min-w-0 flex-1">
         <FormationControls />
+        <PlayerRoleControls />
 
         <div
           id="export-area"

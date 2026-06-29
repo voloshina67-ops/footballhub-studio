@@ -6,6 +6,10 @@ export type FieldPlayer = {
   number?: string;
   photo: string;
   team: "home" | "away";
+  captain?: boolean;
+  isCaptain?: boolean;
+  goalkeeper?: boolean;
+  isGoalkeeper?: boolean;
   x: number;
   y: number;
 };

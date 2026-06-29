@@ -31,16 +31,28 @@ function getInitials(name: string) {
 }
 
 function hasCaptainBadge(player: FieldPlayer) {
-  const playerWithCaptain = player as FieldPlayer & {
-    captain?: unknown;
-    isCaptain?: unknown;
-  };
+  const playerRecord = player as unknown as Record<string, unknown>;
+  const captain = playerRecord.captain;
+  const isCaptain = playerRecord.isCaptain;
 
   return (
-    playerWithCaptain.captain === true ||
-    playerWithCaptain.isCaptain === true ||
-    playerWithCaptain.captain === "true" ||
-    playerWithCaptain.isCaptain === "true"
+    captain === true ||
+    isCaptain === true ||
+    captain === "true" ||
+    isCaptain === "true"
+  );
+}
+
+function hasGoalkeeperBadge(player: FieldPlayer) {
+  const playerRecord = player as unknown as Record<string, unknown>;
+  const goalkeeper = playerRecord.goalkeeper;
+  const isGoalkeeper = playerRecord.isGoalkeeper;
+
+  return (
+    goalkeeper === true ||
+    isGoalkeeper === true ||
+    goalkeeper === "true" ||
+    isGoalkeeper === "true"
   );
 }
 
@@ -55,6 +67,7 @@ function FieldPlayerCard({ player }: { player: FieldPlayer }) {
   const hasPhoto = Boolean(photo) && !photoFailed;
   const isHome = player.team === "home";
   const hasCaptain = hasCaptainBadge(player);
+  const hasGoalkeeper = hasGoalkeeperBadge(player);
   const accentClasses = isHome
     ? {
         halo: "bg-blue-300/35",
@@ -102,6 +115,12 @@ function FieldPlayerCard({ player }: { player: FieldPlayer }) {
         {hasCaptain && (
           <div className="absolute -right-[clamp(0.1rem,0.35vw,0.25rem)] -top-[clamp(0.1rem,0.35vw,0.25rem)] flex h-[clamp(1rem,1.8vw,1.45rem)] min-w-[clamp(1rem,1.8vw,1.45rem)] items-center justify-center rounded-full border border-amber-100/75 bg-amber-300/95 px-1 text-[clamp(0.45rem,0.75vw,0.65rem)] font-black text-slate-950 shadow-[0_5px_14px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.85)]">
             C
+          </div>
+        )}
+
+        {hasGoalkeeper && (
+          <div className="absolute -left-[clamp(0.1rem,0.35vw,0.25rem)] -top-[clamp(0.1rem,0.35vw,0.25rem)] flex h-[clamp(1rem,1.8vw,1.45rem)] min-w-[clamp(1rem,1.8vw,1.45rem)] items-center justify-center rounded-full border border-emerald-100/75 bg-emerald-300/95 px-1 text-[clamp(0.42rem,0.72vw,0.62rem)] font-black text-slate-950 shadow-[0_5px_14px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.85)]">
+            GK
           </div>
         )}
       </div>

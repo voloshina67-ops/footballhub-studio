@@ -80,6 +80,10 @@ function normalizeNumber(value: unknown) {
   return null;
 }
 
+function normalizeFlag(value: unknown) {
+  return value === true || value === "true";
+}
+
 const isFormationName = (
   value: unknown
 ): value is FormationName =>
@@ -98,6 +102,12 @@ function validatePlayer(
   const x = value.x;
   const y = value.y;
   const normalizedNumber = normalizeNumber(number);
+  const isCaptain =
+    normalizeFlag(value.captain) ||
+    normalizeFlag(value.isCaptain);
+  const isGoalkeeper =
+    normalizeFlag(value.goalkeeper) ||
+    normalizeFlag(value.isGoalkeeper);
 
   if (
     !isFiniteNumber(id) ||
@@ -117,6 +127,10 @@ function validatePlayer(
     number: normalizedNumber,
     photo,
     team,
+    captain: isCaptain,
+    isCaptain,
+    goalkeeper: isGoalkeeper,
+    isGoalkeeper,
     x: Math.max(0, Math.min(100, x)),
     y: Math.max(0, Math.min(100, y)),
   };
