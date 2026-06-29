@@ -44,6 +44,34 @@ const isFiniteNumber = (
 ): value is number =>
   typeof value === "number" && Number.isFinite(value);
 
+const isImageSource = (value: unknown): value is string => {
+  if (!isString(value)) return false;
+  if (!value) return true;
+
+  return (
+    value.startsWith("/") ||
+    value.startsWith("https://") ||
+    value.startsWith("http://")
+  );
+};
+
+function normalizeNumber(value: unknown) {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  if (isString(value)) return value;
+
+  if (
+    isFiniteNumber(value) &&
+    Number.isInteger(value)
+  ) {
+    return String(value);
+  }
+
+  return null;
+}
+
 const isFormationName = (
   value: unknown
 ): value is FormationName =>
@@ -61,12 +89,13 @@ function validatePlayer(
   const team = value.team;
   const x = value.x;
   const y = value.y;
+  const normalizedNumber = normalizeNumber(number);
 
   if (
     !isFiniteNumber(id) ||
     !isString(name) ||
-    !(number === undefined || isString(number)) ||
-    !isString(photo) ||
+    normalizedNumber === null ||
+    !isImageSource(photo) ||
     !(team === "home" || team === "away") ||
     !isFiniteNumber(x) ||
     !isFiniteNumber(y)
@@ -77,7 +106,7 @@ function validatePlayer(
   return {
     id,
     name,
-    number,
+    number: normalizedNumber,
     photo,
     team,
     x: Math.max(0, Math.min(100, x)),
@@ -105,8 +134,8 @@ function parseProject(
   if (
     !isString(match.homeTeam) ||
     !isString(match.awayTeam) ||
-    !isString(match.homeLogo) ||
-    !isString(match.awayLogo)
+    !isImageSource(match.homeLogo) ||
+    !isImageSource(match.awayLogo)
   ) {
     return null;
   }
