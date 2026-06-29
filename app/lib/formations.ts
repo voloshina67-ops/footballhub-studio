@@ -17,6 +17,24 @@ export const rowX: Record<number, number[]> = {
   6: [46, 40, 33, 26, 18, 8],
 };
 
+export const COMMON_FORMATIONS = {
+  "4-3-3": [3, 3, 4, 1],
+  "4-2-3-1": [1, 3, 2, 4, 1],
+  "4-4-2": [2, 4, 4, 1],
+  "3-5-2": [2, 5, 3, 1],
+  "5-3-2": [2, 3, 5, 1],
+} as const;
+
+export type FormationName = keyof typeof COMMON_FORMATIONS;
+
+export function getFormationRows(
+  formation: string
+): readonly number[] {
+  return COMMON_FORMATIONS[
+    formation as FormationName
+  ] ?? COMMON_FORMATIONS["4-3-3"];
+}
+
 export function getPlayerPosition(
   side: "home" | "away",
   formationRows: number,

@@ -6,6 +6,7 @@ import AwayPlayersSidebar from "./AwayPlayersSidebar";
 import FootballField from "./FootballField";
 import ExportButton from "./ExportButton";
 import MatchHeader from "./MatchHeader";
+import FormationControls from "./FormationControls";
 
 export default function EditorContent() {
   const players = useLineupStore((s) => s.players);
@@ -22,6 +23,8 @@ export default function EditorContent() {
         <HomePlayersSidebar />
 
         <div className="min-w-0 flex-1">
+          <FormationControls />
+
           <div
             id="export-area"
             className="mx-auto aspect-video w-full max-w-[1600px] overflow-hidden rounded-[clamp(1rem,2.4vw,1.75rem)] bg-transparent p-[clamp(0.5rem,1vw,0.9rem)]"
