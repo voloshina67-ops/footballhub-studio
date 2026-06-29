@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Player = {
+export type FlashscorePlayer = {
   id: string;
   name: string;
   number?: string;
@@ -8,20 +8,20 @@ type Player = {
 };
 
 type FlashscoreState = {
-  homePlayers: Player[];
-  awayPlayers: Player[];
+  homePlayers: FlashscorePlayer[];
+  awayPlayers: FlashscorePlayer[];
 
-  homeSubs: Player[];
-  awaySubs: Player[];
+  homeSubs: FlashscorePlayer[];
+  awaySubs: FlashscorePlayer[];
 
   setPlayers: (
-    homePlayers: Player[],
-    awayPlayers: Player[]
+    homePlayers: FlashscorePlayer[],
+    awayPlayers: FlashscorePlayer[]
   ) => void;
 
   setSubs: (
-    homeSubs: Player[],
-    awaySubs: Player[]
+    homeSubs: FlashscorePlayer[],
+    awaySubs: FlashscorePlayer[]
   ) => void;
 };
 

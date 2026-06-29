@@ -7,6 +7,7 @@ import FootballField from "./FootballField";
 import ExportButton from "./ExportButton";
 import MatchHeader from "./MatchHeader";
 import FormationControls from "./FormationControls";
+import BenchPanel from "./BenchPanel";
 
 export default function EditorContent() {
   const players = useLineupStore((s) => s.players);
@@ -43,6 +44,8 @@ export default function EditorContent() {
             </div>
           </div>
         </div>
+
+        <BenchPanel />
 
         <div className="mt-4 flex justify-center">
           <ExportButton />

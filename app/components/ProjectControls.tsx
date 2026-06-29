@@ -15,6 +15,10 @@ import {
 } from "../store/lineupStore";
 import { useMatchStore } from "../store/matchStore";
 import { useFormationStore } from "../store/formationStore";
+import {
+  type FlashscorePlayer,
+  useFlashscoreStore,
+} from "../store/flashscoreStore";
 
 type SavedProject = {
   version: 1;
@@ -29,6 +33,10 @@ type SavedProject = {
     away: FormationName;
   };
   players: FieldPlayer[];
+  bench: {
+    home: FlashscorePlayer[];
+    away: FlashscorePlayer[];
+  };
 };
 
 const isObject = (
@@ -114,6 +122,46 @@ function validatePlayer(
   };
 }
 
+function validateBenchPlayer(
+  value: unknown
+): FlashscorePlayer | null {
+  if (!isObject(value)) return null;
+
+  const id = value.id;
+  const name = value.name;
+  const number = normalizeNumber(value.number);
+  const photo = value.photo;
+
+  if (
+    !(isString(id) || isFiniteNumber(id)) ||
+    !isString(name) ||
+    number === null ||
+    !isImageSource(photo)
+  ) {
+    return null;
+  }
+
+  return {
+    id: String(id),
+    name,
+    number,
+    photo,
+  };
+}
+
+function parseBenchPlayers(value: unknown) {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) return null;
+
+  const players = value.map(validateBenchPlayer);
+
+  if (players.some((player) => !player)) {
+    return null;
+  }
+
+  return players as FlashscorePlayer[];
+}
+
 function parseProject(
   value: unknown
 ): SavedProject | null {
@@ -122,6 +170,7 @@ function parseProject(
   const match = value.match;
   const formations = value.formations;
   const players = value.players;
+  const bench = value.bench;
 
   if (
     !isObject(match) ||
@@ -141,8 +190,18 @@ function parseProject(
   }
 
   const parsedPlayers = players.map(validatePlayer);
+  const parsedHomeBench = isObject(bench)
+    ? parseBenchPlayers(bench.home)
+    : [];
+  const parsedAwayBench = isObject(bench)
+    ? parseBenchPlayers(bench.away)
+    : [];
 
-  if (parsedPlayers.some((player) => !player)) {
+  if (
+    parsedPlayers.some((player) => !player) ||
+    !parsedHomeBench ||
+    !parsedAwayBench
+  ) {
     return null;
   }
 
@@ -163,6 +222,10 @@ function parseProject(
         : "4-3-3",
     },
     players: parsedPlayers as FieldPlayer[],
+    bench: {
+      home: parsedHomeBench,
+      away: parsedAwayBench,
+    },
   };
 }
 
@@ -200,6 +263,12 @@ export default function ProjectControls() {
   const setFormations = useFormationStore(
     (state) => state.setFormations
   );
+  const homeSubs = useFlashscoreStore((state) => state.homeSubs);
+  const awaySubs = useFlashscoreStore((state) => state.awaySubs);
+  const setFlashPlayers = useFlashscoreStore(
+    (state) => state.setPlayers
+  );
+  const setSubs = useFlashscoreStore((state) => state.setSubs);
   const canSave = players.length > 0;
 
   const handleSave = () => {
@@ -221,6 +290,10 @@ export default function ProjectControls() {
         away: awayFormation,
       },
       players,
+      bench: {
+        home: homeSubs,
+        away: awaySubs,
+      },
     });
     setMessage("Project saved.");
   };
@@ -258,6 +331,25 @@ export default function ProjectControls() {
         project.formations.away
       );
       setPlayers(project.players);
+      setFlashPlayers(
+        project.players
+          .filter((player) => player.team === "home")
+          .map((player) => ({
+            id: String(player.id),
+            name: player.name,
+            number: player.number,
+            photo: player.photo,
+          })),
+        project.players
+          .filter((player) => player.team === "away")
+          .map((player) => ({
+            id: String(player.id),
+            name: player.name,
+            number: player.number,
+            photo: player.photo,
+          }))
+      );
+      setSubs(project.bench.home, project.bench.away);
       setMessage("Project loaded.");
     } catch {
       setMessage("Invalid project file.");

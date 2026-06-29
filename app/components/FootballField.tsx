@@ -10,6 +10,8 @@ import {
   type FieldPlayer,
   useLineupStore,
 } from "../store/lineupStore";
+import { useFlashscoreStore } from "../store/flashscoreStore";
+import { useBenchSelectionStore } from "../store/benchSelectionStore";
 
 type DragState = {
   id: number;
@@ -121,9 +123,66 @@ function FieldPlayerCard({ player }: { player: FieldPlayer }) {
 export default function FootballField() {
   const players = useLineupStore((s) => s.players);
   const movePlayer = useLineupStore((s) => s.movePlayer);
+  const setPlayers = useLineupStore((s) => s.setPlayers);
+  const homeSubs = useFlashscoreStore((s) => s.homeSubs);
+  const awaySubs = useFlashscoreStore((s) => s.awaySubs);
+  const setSubs = useFlashscoreStore((s) => s.setSubs);
+  const selectedBench = useBenchSelectionStore((s) => s.selectedBench);
+  const clearBench = useBenchSelectionStore((s) => s.clearBench);
 
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<DragState | null>(null);
+
+  const swapWithBench = (targetPlayer: FieldPlayer) => {
+    if (
+      !selectedBench ||
+      selectedBench.team !== targetPlayer.team
+    ) {
+      return;
+    }
+
+    const benchList =
+      selectedBench.team === "home" ? homeSubs : awaySubs;
+    const benchPlayer = benchList.find(
+      (player) => player.id === selectedBench.id
+    );
+
+    if (!benchPlayer) return;
+
+    const swappedPlayers = players.map((player) =>
+      player.id === targetPlayer.id
+        ? {
+            ...player,
+            name: benchPlayer.name,
+            number: benchPlayer.number,
+            photo: benchPlayer.photo,
+          }
+        : player
+    );
+
+    const returnedPlayer = {
+      id: String(targetPlayer.id),
+      name: targetPlayer.name,
+      number: targetPlayer.number,
+      photo: targetPlayer.photo,
+    };
+
+    const updatedBench = benchList.map((player) =>
+      player.id === selectedBench.id
+        ? returnedPlayer
+        : player
+    );
+
+    setPlayers(swappedPlayers);
+
+    if (selectedBench.team === "home") {
+      setSubs(updatedBench, awaySubs);
+    } else {
+      setSubs(homeSubs, updatedBench);
+    }
+
+    clearBench();
+  };
 
   const handlePointerDown = (
     event: ReactPointerEvent<HTMLDivElement>,
@@ -222,6 +281,19 @@ export default function FootballField() {
       {players.map((player) => (
         <div
           key={player.id}
+          onClick={() => swapWithBench(player)}
+          onDragOver={(event) => {
+            if (
+              selectedBench?.team === player.team
+            ) {
+              event.preventDefault();
+              event.dataTransfer.dropEffect = "move";
+            }
+          }}
+          onDrop={(event) => {
+            event.preventDefault();
+            swapWithBench(player);
+          }}
           onPointerDown={(event) =>
             handlePointerDown(event, player.id)
           }
