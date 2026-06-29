@@ -3,15 +3,120 @@
 import Image from "next/image";
 import {
   useRef,
+  useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { useLineupStore } from "../store/lineupStore";
+import {
+  type FieldPlayer,
+  useLineupStore,
+} from "../store/lineupStore";
 
 type DragState = {
   id: number;
   pointerId: number;
   fieldRect: DOMRect;
 };
+
+function getInitials(name: string) {
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part.charAt(0))
+    .join("");
+
+  return initials || "P";
+}
+
+function hasCaptainBadge(player: FieldPlayer) {
+  const playerWithCaptain = player as FieldPlayer & {
+    captain?: unknown;
+    isCaptain?: unknown;
+  };
+
+  return (
+    playerWithCaptain.captain === true ||
+    playerWithCaptain.isCaptain === true ||
+    playerWithCaptain.captain === "true" ||
+    playerWithCaptain.isCaptain === "true"
+  );
+}
+
+function FieldPlayerCard({ player }: { player: FieldPlayer }) {
+  const [photoFailed, setPhotoFailed] = useState(false);
+  const name = String(player.name ?? "").trim() || "Unknown Player";
+  const number = String(player.number ?? "").trim() || "-";
+  const photo =
+    typeof player.photo === "string"
+      ? player.photo.trim()
+      : "";
+  const hasPhoto = Boolean(photo) && !photoFailed;
+  const isHome = player.team === "home";
+  const hasCaptain = hasCaptainBadge(player);
+  const accentClasses = isHome
+    ? {
+        halo: "bg-blue-300/35",
+        ring: "border-blue-200/90 shadow-blue-400/35",
+        number:
+          "border-blue-100/55 bg-blue-500/95 text-white shadow-blue-950/25",
+        line: "from-blue-300/0 via-blue-200/75 to-blue-300/0",
+      }
+    : {
+        halo: "bg-rose-300/35",
+        ring: "border-rose-200/90 shadow-rose-400/35",
+        number:
+          "border-rose-100/55 bg-rose-500/95 text-white shadow-rose-950/25",
+        line: "from-rose-300/0 via-rose-200/75 to-rose-300/0",
+      };
+
+  return (
+    <div className="relative flex w-[clamp(5.5rem,12vw,8.5rem)] flex-col items-center rounded-[clamp(0.65rem,1vw,0.85rem)] border border-white/20 bg-slate-950/64 px-[clamp(0.35rem,0.8vw,0.6rem)] pb-[clamp(0.28rem,0.7vw,0.52rem)] pt-[clamp(0.34rem,0.8vw,0.6rem)] shadow-[0_14px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl">
+      <div className={`pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r ${accentClasses.line}`} />
+      <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(145deg,rgba(255,255,255,0.18),transparent_38%,rgba(255,255,255,0.05))]" />
+
+      <div className="relative">
+        <div className={`absolute -inset-[clamp(0.2rem,0.55vw,0.38rem)] rounded-full ${accentClasses.halo} opacity-75 blur-md transition-opacity duration-200 group-hover:opacity-100`} />
+        <div
+          className={`relative flex h-[clamp(2.7rem,5.8vw,4.75rem)] w-[clamp(2.7rem,5.8vw,4.75rem)] items-center justify-center overflow-hidden rounded-full border-[clamp(2px,0.3vw,3px)] bg-[linear-gradient(145deg,#f8fafc,#94a3b8)] shadow-[0_9px_22px_rgba(0,0,0,0.48),0_0_0_1px_rgba(255,255,255,0.68)] ${accentClasses.ring}`}
+        >
+          {hasPhoto ? (
+            <Image
+              src={photo}
+              alt={name}
+              width={80}
+              height={80}
+              sizes="(max-width: 768px) 40px, (max-width: 1920px) 64px, 80px"
+              draggable={false}
+              onError={() => setPhotoFailed(true)}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <span className="text-[clamp(0.9rem,1.8vw,1.5rem)] font-black uppercase text-slate-900/78">
+              {getInitials(name)}
+            </span>
+          )}
+        </div>
+
+        {hasCaptain && (
+          <div className="absolute -right-[clamp(0.1rem,0.35vw,0.25rem)] -top-[clamp(0.1rem,0.35vw,0.25rem)] flex h-[clamp(1rem,1.8vw,1.45rem)] min-w-[clamp(1rem,1.8vw,1.45rem)] items-center justify-center rounded-full border border-amber-100/75 bg-amber-300/95 px-1 text-[clamp(0.45rem,0.75vw,0.65rem)] font-black text-slate-950 shadow-[0_5px_14px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.85)]">
+            C
+          </div>
+        )}
+      </div>
+
+      <div className="relative mt-[clamp(0.28rem,0.65vw,0.5rem)] flex h-[clamp(1.35rem,2.25vw,1.85rem)] w-full items-stretch overflow-hidden rounded-[clamp(0.42rem,0.72vw,0.62rem)] border border-white/18 bg-black/44 shadow-[0_7px_18px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.16)]">
+        <span
+          className={`flex min-w-[clamp(1.45rem,2.6vw,2.1rem)] items-center justify-center border-r px-1 text-[clamp(0.58rem,0.95vw,0.78rem)] font-black tabular-nums ${accentClasses.number}`}
+        >
+          {number}
+        </span>
+        <span className="min-w-0 flex-1 truncate px-[clamp(0.38rem,0.75vw,0.62rem)] text-[clamp(0.52rem,0.9vw,0.72rem)] font-extrabold uppercase leading-[clamp(1.35rem,2.25vw,1.85rem)] text-white shadow-black [text-shadow:0_1px_2px_rgba(0,0,0,0.85)]">
+          {name}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function FootballField() {
   const players = useLineupStore((s) => s.players);
@@ -137,39 +242,7 @@ export default function FootballField() {
           }}
           className="group cursor-grab [will-change:transform] outline-none transition-[scale,filter] duration-200 ease-out hover:scale-105 hover:brightness-110 active:cursor-grabbing active:scale-105"
         >
-          <div className="flex flex-col items-center drop-shadow-[0_8px_14px_rgba(0,0,0,0.48)]">
-            <div className="relative">
-              <div
-                className={
-                  player.team === "home"
-                    ? "absolute -inset-[clamp(0.2rem,0.6vw,0.4rem)] rounded-full bg-blue-400/25 blur-md transition-opacity duration-200 group-hover:opacity-100"
-                    : "absolute -inset-[clamp(0.2rem,0.6vw,0.4rem)] rounded-full bg-rose-400/25 blur-md transition-opacity duration-200 group-hover:opacity-100"
-                }
-              />
-              <Image
-                src={player.photo}
-                alt={player.name}
-                width={80}
-                height={80}
-                draggable={false}
-                className={
-                  player.team === "home"
-                    ? "relative h-[clamp(2.5rem,6vw,5rem)] w-[clamp(2.5rem,6vw,5rem)] rounded-full border-[clamp(2px,0.3vw,3px)] border-blue-300 bg-slate-100 object-cover shadow-[0_7px_18px_rgba(0,0,0,0.46),0_0_0_1px_rgba(255,255,255,0.65),0_0_24px_rgba(96,165,250,0.5)]"
-                    : "relative h-[clamp(2.5rem,6vw,5rem)] w-[clamp(2.5rem,6vw,5rem)] rounded-full border-[clamp(2px,0.3vw,3px)] border-rose-300 bg-slate-100 object-cover shadow-[0_7px_18px_rgba(0,0,0,0.46),0_0_0_1px_rgba(255,255,255,0.65),0_0_24px_rgba(251,113,133,0.5)]"
-                }
-              />
-
-              {player.number && (
-                <div className="absolute -right-[clamp(0.15rem,0.5vw,0.3rem)] -top-[clamp(0.15rem,0.5vw,0.3rem)] flex h-[clamp(1.25rem,2.4vw,2rem)] min-w-[clamp(1.25rem,2.4vw,2rem)] items-center justify-center rounded-full border border-white/80 bg-white/90 px-1 text-[clamp(0.55rem,1.1vw,0.875rem)] font-black tabular-nums text-slate-950 shadow-[0_4px_14px_rgba(0,0,0,0.42),inset_0_1px_0_white] backdrop-blur-md">
-                  {player.number}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-[clamp(0.25rem,0.7vw,0.5rem)] max-w-[clamp(5rem,12vw,8.75rem)] truncate rounded-full border border-white/15 bg-slate-950/65 px-[clamp(0.4rem,1vw,0.75rem)] py-[clamp(0.15rem,0.35vw,0.25rem)] text-center text-[clamp(0.55rem,1.05vw,0.8125rem)] font-extrabold uppercase leading-none tracking-[0.04em] text-white shadow-[0_5px_16px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-md">
-              {player.name}
-            </div>
-          </div>
+          <FieldPlayerCard player={player} />
         </div>
       ))}
     </div>
